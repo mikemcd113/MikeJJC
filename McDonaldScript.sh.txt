@@ -1,0 +1,23 @@
+#!/bin/bash
+
+echo "The hostname is: $(hostname)"
+
+echo "The operating system is: $(uname -o)"
+
+echo "Current uptime is: $(uptime -p)"
+
+echo "The kernel version is: $(uname -r)"
+
+echo "The CPU Information is: $(lscpu | grep 'Model name' | awk -F ':' '{print $2}' | sed 's/^[[:space:]]*//')"
+
+echo -e "Current memory available is: $(free -h | grep Mem | awk '{print $7}')"
+echo -e "Current memory free is: $(free -h | grep Mem | awk '{print $4}')"
+
+echo "The IP information is:"
+ip addr show | grep -E "inet " | awk '{print $2}'
+
+echo "The filesystem information is:"
+df -h --output=source,pcent,fstype
+
+echo "The last five error entries are:"
+grep -i 'error' /var/log/syslog | tail -n 5
